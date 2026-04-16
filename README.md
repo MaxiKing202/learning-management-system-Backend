@@ -43,7 +43,16 @@ The project supports two databases (configured via Spring profiles):
     # macOS with Homebrew
     brew install postgresql
     ```
+    FOR LOCAL USE: 
+  - Download for Windows: https://docs.docker.com/desktop/setup/install/windows-install/
+  - Download for MacOS: https://docs.docker.com/desktop/setup/install/mac-install/
+  - Download for Linux: https://docs.docker.com/desktop/setup/install/linux/
 
+    Start the db: 
+  - 1. make sure that in resource/application.properties, the profile is set to postgresql: `spring.profiles.active=postgresql` and remove h2
+  - 2. run `docker compose up` in the root of the project, this will start a postgres db with the credentials specified in `application-postgresql.properties`
+    you can also append '-d' to run it in detached mode: `docker compose up -d` (it will run in the background and not show everything in the terminal)
+  - 3. To stop the db, run `docker compose down`
 ## Project Dependencies (for everything bellow: installation happens via Maven wrapper)
 
 ### Spring Boot Starters

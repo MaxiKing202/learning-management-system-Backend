@@ -27,7 +27,6 @@ public class AuthController {
         if (user.isPresent()) {
             return ResponseEntity.ok("Token generated!");
         } else {
-            System.out.println("name " + credentials.getUsername() + " " + credentials.getPassword());
             return ResponseEntity.status(401).body("Invalid credentials");
         }
     }

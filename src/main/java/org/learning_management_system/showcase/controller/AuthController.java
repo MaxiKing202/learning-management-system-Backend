@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Authentication", description = "Endpoints for user authentication and token management")
 public class AuthController {
 
     private final AuthService authService;
@@ -22,6 +26,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "User login", description = "Authenticate a user with username and password and return an authentication token (placeholder)")
     public ResponseEntity<String> login(@RequestBody LoginRequest credentials) {
         Optional<User> user = authService.authenticate(credentials.getUsername(), credentials.getPassword());
         if (user.isPresent()) {

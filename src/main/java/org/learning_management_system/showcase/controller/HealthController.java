@@ -1,5 +1,7 @@
 package org.learning_management_system.showcase.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +13,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/health")
+@Tag(name = "Health", description = "Application health check endpoints")
 public class HealthController {
 
     @GetMapping
+    @Operation(summary = "Basic health check", description = "Returns basic health status, timestamp and a short message")
     public ResponseEntity<Map<String, Object>> health() {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "UP");
@@ -23,6 +27,7 @@ public class HealthController {
     }
 
     @GetMapping("/detailed")
+    @Operation(summary = "Detailed health check", description = "Returns detailed health information including database connectivity and timestamp")
     public ResponseEntity<Map<String, Object>> healthDetailed() {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "UP");

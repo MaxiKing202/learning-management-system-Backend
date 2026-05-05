@@ -200,6 +200,12 @@ If port 8080 is already in use:
 ./mvnw test -Dtest=ShowCaseApplicationTests 
 ```
 
+## API documentation / frontend guide
+We use the supported OpenAPI/Swagger-UI integration as comfortable way to document
+existing backend endpoints, their expected JSON schema/blueprint as well as their possible
+return types. The Swagger-UI is also a functional frontend that can be used for manual testing.
+Reachable under: http://localhost:8080/swagger-ui/index.html#/
+
 ## Next Steps
 
 1. Explore the health check endpoints in a browser or with curl
@@ -218,4 +224,3 @@ For issues or questions, refer to:
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)
 - [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
 - [Liquibase Documentation](https://docs.liquibase.com/)
-- http://localhost:8080/swagger-ui/

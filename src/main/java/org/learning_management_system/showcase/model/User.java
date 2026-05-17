@@ -26,13 +26,16 @@ public class User {
 
     private Integer matrikelNumber;
 
+    private String role;
+
     // store BCrypt-hashed password
     private String password;
 
-    public User(String username, String email, Integer matrikelNumber) {
+    public User(String username, String email, Integer matrikelNumber, String role) {
         this.matrikelNumber = matrikelNumber;
         this.username = username;
         this.email = email;
+        this.role = role;
     }
 
 }

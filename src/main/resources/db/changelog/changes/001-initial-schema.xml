@@ -16,6 +16,7 @@
             <column name="email" type="varchar(255)"/>
             <column name="matrikel_number" type="number"/>
             <column name="password" type="varchar"/>
+            <column name="role" type="varchar"/>
         </createTable>
     </changeSet>
 

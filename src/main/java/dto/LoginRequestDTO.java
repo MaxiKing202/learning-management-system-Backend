@@ -4,7 +4,7 @@ import lombok.Data;
 import jakarta.validation.constraints.NotNull;
 
 @Data
-public class LoginRequest {
+public class LoginRequestDTO {
     @NotNull
     private String username;
 

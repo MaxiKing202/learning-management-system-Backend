@@ -1,6 +1,6 @@
 package org.learning_management_system.showcase.controller;
 
-import dto.LoginRequest;
+import dto.LoginRequestDTO;
 import org.learning_management_system.showcase.model.User;
 import org.learning_management_system.showcase.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "User login", description = "Authenticate a user with username and password and return an authentication token (placeholder)")
-    public ResponseEntity<String> login(@RequestBody LoginRequest credentials) {
+    public ResponseEntity<String> login(@RequestBody LoginRequestDTO credentials) {
         Optional<User> user = authService.authenticate(credentials.getUsername(), credentials.getPassword());
         if (user.isPresent()) {
             return ResponseEntity.ok("Token generated!");

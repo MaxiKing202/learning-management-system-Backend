@@ -1,5 +1,6 @@
 package org.learning_management_system.showcase.service;
 
+import org.jspecify.annotations.NullMarked;
 import org.learning_management_system.showcase.model.User;
 import org.learning_management_system.showcase.repository.UserRepository;
 import org.learning_management_system.showcase.security.UserInfoDetails;
@@ -23,6 +24,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
+    @NullMarked
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
@@ -33,5 +35,18 @@ public class UserService implements UserDetailsService {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         return "User added successfully";
+    }
+
+    public String resetPassword(User user){
+        User notUpdatedUser = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + user.getEmail()));
+        String oldPassword = notUpdatedUser.getPassword();
+        String newPassword = encoder.encode(user.getPassword());
+        if (oldPassword.equals(newPassword)) {
+            return "New password cannot be the same as the old password.";
+        }
+        notUpdatedUser.setPassword(newPassword);
+        userRepository.save(notUpdatedUser);
+        return "Password changed successfully";
     }
 }

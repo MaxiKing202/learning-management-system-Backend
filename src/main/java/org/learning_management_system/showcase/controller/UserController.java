@@ -49,4 +49,9 @@ public class UserController {
         }
     }
 
+    @PostMapping("/resetPassword")
+    public String resetPassword(@RequestBody User userInfo){
+        return userService.resetPassword(userInfo);
+    }
+
 }

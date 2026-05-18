@@ -40,8 +40,8 @@ public class SecurityConfig {
                                 "/api/health/**", "/", "/v3/api-docs/**", "/swagger-ui/**",
                                 "/swagger-ui.html", "/auth/welcome", "/auth/addNewUser",
                                 "/auth/generateToken").permitAll()
-                        .requestMatchers("/auth/user/**").hasAuthority("ROLE_USER")
-                        .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/auth/user/**", "/auth/resetPassword").hasAuthority("ROLE_USER")
+                        .requestMatchers("/auth/admin/**", "/auth/resetPassword").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess ->

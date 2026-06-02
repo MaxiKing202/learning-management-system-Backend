@@ -5,7 +5,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
 
-    <include file="db/changelog/changes/001-initial-schema.xml"/>
-    <include file="db/changelog/changes/002-matrikel-number-to-varchar.xml"/>
+    <changeSet id="2" author="maxim">
+        <modifyDataType tableName="users" columnName="matrikel_number" newDataType="varchar(6)"/>
+    </changeSet>
 
 </databaseChangeLog>

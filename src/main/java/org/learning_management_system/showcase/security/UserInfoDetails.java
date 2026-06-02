@@ -14,7 +14,7 @@ public class UserInfoDetails implements UserDetails {
 
     private String userName;
     private String password;
-    private Integer matrikelNumber;
+    private String matrikelNumber;
     private List<GrantedAuthority> authorities;
 
     public UserInfoDetails(User user) {

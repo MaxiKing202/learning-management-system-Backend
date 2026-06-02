@@ -1,57 +1,48 @@
 package org.learning_management_system.showcase.controller;
 
 
-import dto.AuthRequestDTO;
+import dto.RegistrationRequestDTO;
+import dto.UserDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.learning_management_system.showcase.model.User;
-import org.learning_management_system.showcase.service.JwtService;
 import org.learning_management_system.showcase.service.UserService;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import utils.DTOMapper;
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name="User Management", description="Endpoint for management of user account and authentication details")
 public class UserController {
 
     private final UserService userService;
 
-    private final JwtService jwtService;
-
-    private final AuthenticationManager authenticationManager;
-
     @GetMapping("/welcome")
-    public String welcome(){
-        return"Welcome this endpoint is not secure";
+    public ResponseEntity<String> welcome(){
+        return ResponseEntity.ok("Welcome this endpoint is not secure");
     }
 
+    @Operation(summary = "User registration", description = "Register a new user with the provided registration details and return the created user information")
     @PostMapping("/addNewUser")
-    public String addNewUser(@RequestBody User userInfo){
-        return userService.addUser(userInfo);
+    public ResponseEntity<UserDTO> addNewUser(@RequestBody RegistrationRequestDTO userInfo){
+        User user = DTOMapper.registrationRequestToUser(userInfo);
+        User result = userService.addUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(DTOMapper.userToUserDTO(result));
     }
 
-    @PostMapping("/generateToken")
-    public String authenticateAndGetToken(@RequestBody AuthRequestDTO authRequest){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-        );
-        if (authentication.isAuthenticated()){
-            return jwtService.generateToken(authRequest.getUsername());
-        } else {
-            throw new UsernameNotFoundException("Invalid user request");
-        }
-    }
-
+    @Operation(summary="Password reset", description="Reset the password for a user with the provided email and new password. The new password cannot be the same as the old password.")
     @PostMapping("/resetPassword")
-    public String resetPassword(@RequestBody User userInfo){
-        return userService.resetPassword(userInfo);
+    public ResponseEntity<UserDTO> resetPassword(@RequestBody User userInfo){
+        User result = userService.resetPassword(userInfo);
+        return ResponseEntity.ok(DTOMapper.userToUserDTO(result));
     }
 
 }

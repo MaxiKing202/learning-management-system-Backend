@@ -1,6 +1,8 @@
 package org.learning_management_system.showcase.service;
 
 import org.jspecify.annotations.NullMarked;
+import org.learning_management_system.showcase.error_handling.BusinessRuleException;
+import org.learning_management_system.showcase.error_handling.ResourceNotFoundException;
 import org.learning_management_system.showcase.model.User;
 import org.learning_management_system.showcase.repository.UserRepository;
 import org.learning_management_system.showcase.security.UserInfoDetails;
@@ -31,22 +33,18 @@ public class UserService implements UserDetailsService {
         return new UserInfoDetails(user);
     }
 
-    public String addUser(User user){
+    public User addUser(User user){
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return "User added successfully";
+        return userRepository.save(user);
     }
 
-    public String resetPassword(User user){
-        User notUpdatedUser = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + user.getEmail()));
-        String oldPassword = notUpdatedUser.getPassword();
-        String newPassword = encoder.encode(user.getPassword());
-        if (oldPassword.equals(newPassword)) {
-            return "New password cannot be the same as the old password.";
+    public User resetPassword(User user){
+        User existingUser = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + user.getEmail()));
+        if (encoder.matches(user.getPassword(), existingUser.getPassword())) {
+            throw new BusinessRuleException("New password cannot be the same as the old password.");
         }
-        notUpdatedUser.setPassword(newPassword);
-        userRepository.save(notUpdatedUser);
-        return "Password changed successfully";
+        existingUser.setPassword(encoder.encode(user.getPassword()));
+        return userRepository.save(existingUser);
     }
 }

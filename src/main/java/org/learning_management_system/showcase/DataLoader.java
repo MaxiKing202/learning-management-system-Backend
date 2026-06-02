@@ -16,15 +16,15 @@ public class DataLoader {
     public CommandLineRunner loadTestData(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             if (userRepository.count() == 0) {
-                User u1 = new User("user", "user@example.com", 123, "ROLE_USER");
+                User u1 = new User("user", "user@example.com", "000123", "ROLE_USER");
                 u1.setPassword(passwordEncoder.encode("password"));
                 userRepository.save(u1);
 
-                User u2 = new User("alice", "alice@example.com", 1234, "ROLE_USER");
+                User u2 = new User("alice", "alice@example.com", "001234", "ROLE_USER");
                 u2.setPassword(passwordEncoder.encode("password"));
                 userRepository.save(u2);
 
-                User u3 = new User("bob", "bob@example.com", 12345, "ROLE_USER");
+                User u3 = new User("bob", "bob@example.com", "012345", "ROLE_USER");
                 u3.setPassword(passwordEncoder.encode("password"));
                 userRepository.save(u3);
             }

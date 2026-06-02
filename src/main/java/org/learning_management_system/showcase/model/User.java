@@ -1,10 +1,12 @@
 package org.learning_management_system.showcase.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,14 +26,16 @@ public class User {
 
     private String email;
 
-    private Integer matrikelNumber;
+    @Pattern(regexp = "\\d{6}")
+    @Column(length = 6)
+    private String matrikelNumber;
 
     private String role;
 
     // store BCrypt-hashed password
     private String password;
 
-    public User(String username, String email, Integer matrikelNumber, String role) {
+    public User(String username, String email, String matrikelNumber, String role) {
         this.matrikelNumber = matrikelNumber;
         this.username = username;
         this.email = email;

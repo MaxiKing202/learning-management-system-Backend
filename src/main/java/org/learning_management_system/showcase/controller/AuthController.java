@@ -5,12 +5,12 @@ import org.learning_management_system.showcase.service.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,5 +39,10 @@ public class AuthController {
         return ResponseEntity.ok(jwtService.generateToken(authRequest.getUsername()));
     }
 
+    @GetMapping("/user/profile")
+    @Operation(summary = "Get current user profile", description = "Returns the username and roles of the authenticated user. Use this to verify your JWT token works.")
+    public ResponseEntity<String> getUserProfile(Authentication authentication) {
+        return ResponseEntity.ok("User: " + authentication.getName() + ", Roles: " + authentication.getAuthorities());
+    }
 
 }

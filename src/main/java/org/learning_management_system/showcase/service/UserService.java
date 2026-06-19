@@ -35,6 +35,9 @@ public class UserService implements UserDetailsService {
 
     public User addUser(User user){
         user.setPassword(encoder.encode(user.getPassword()));
+        if (user.getRole() == null || user.getRole().isBlank()) {
+            user.setRole("ROLE_USER");
+        }
         return userRepository.save(user);
     }
 

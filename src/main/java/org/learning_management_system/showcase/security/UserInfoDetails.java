@@ -21,6 +21,11 @@ public class UserInfoDetails implements UserDetails {
         this.userName = user.getEmail(); // Use email as username
         this.password = user.getPassword();
         this.matrikelNumber = user.getMatrikelNumber();
+        if(user.getRole() != null) {
+            this.authorities = List.of(new SimpleGrantedAuthority(user.getRole()));
+        } else {
+            this.authorities = List.of();
+        }
         this.authorities = List.of(user.getRole().split(","))
                 .stream()
                 .map(SimpleGrantedAuthority::new)

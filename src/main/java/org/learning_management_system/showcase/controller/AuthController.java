@@ -31,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    @Operation(summary="User authentication and token generation", description="Authenticate a user with the provided credentials and return a JWT token if authentication is successful")
+    @Operation(summary="User authentication and token generation", description="Authenticate a user with the provided credentials and return a JWT token if authentication is successful.<br>ATTENTION: Even though the Schema for a Login Request shows 'Username' as a field, the user's EMAIL ADDRESS should be given as value here as this is internally used for finding users and logging them in.")
     public ResponseEntity<String> login(@RequestBody AuthRequestDTO authRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
